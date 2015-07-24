@@ -13,7 +13,12 @@ class Home extends MY_Controller {
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['lastname'] = $this->session->userdata('lastname');
 		
+		// Load the Flot library
+		$this->load->library('flot');
+		
 		// Load the view for this controller
-		$this->load->view('home',$data);
+		$data['title'] = "Home";
+		$data['footer_js'] = $this->flot->returnJS();
+		$this->template->view('home',$data);
 	}
 }

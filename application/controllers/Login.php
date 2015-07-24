@@ -39,7 +39,7 @@ class Login extends CI_Controller {
 				$user = $this->user_model->load($id);
 				
 				// Set the session data and redirect
-				$userData = array('firstname'=>$user->getFirstname(),'lastname'=>$user->getLastname(),'logged_in'=>true);	
+				$userData = array('firstname'=>$user->getFirstname(),'lastname'=>$user->getLastname(),'logged_in'=>true,'user_id'=>$user->getID());	
 				$this->session->set_userdata($userData);
 				
 				redirect(base_url()."home");
