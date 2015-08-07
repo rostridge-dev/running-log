@@ -38,11 +38,11 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url(); ?>home">Summary</a></li>
-						<li><a href="<?php echo base_url(); ?>workouts">Workouts</a></li>
+						<li><a href="<?php echo base_url(); ?>entries">Entries</a></li>
 						<li><a href="<?php echo base_url(); ?>routes">Routes</a></li>
 						<li><a href="<?php echo base_url(); ?>shoes">Shoes</a></li>
 						<li><a href="<?php echo base_url(); ?>records">Records</a></li>
-						<li><form action="<?php echo base_url(); ?>entry/add" method="get"><button class="btn btn-default navbar-btn" type="submit">Add New Entry</button></form></li>
+						<li><form action="<?php echo base_url(); ?>entries/add" method="get"><button class="btn btn-default navbar-btn" type="submit">Add New Entry</button></form></li>
 					</ul>
 				</div><!--/.navbar-collapse -->
 			</div>
