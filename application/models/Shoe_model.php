@@ -53,6 +53,13 @@ class Shoe_model extends MY_Model {
 	protected $_retired;
 	
 	/**
+	 * Set the mileage for the shoe
+	 *
+	 * @var number
+	 */
+	protected $_mileage;
+	
+	/**
 	 * The active status of shoe
 	 *
 	 * @var boolean
@@ -270,10 +277,19 @@ class Shoe_model extends MY_Model {
 	/**
 	 * Get the total mileage for the shoe
 	 *
-	 * @return string
+	 * @return number
 	 */
 	public function getMileage() {
-		return 0;
+		return $this->_mileage;
+	}
+	
+	/**
+	 * Set the total mileage for the shoe
+	 *
+	 * @param number $value The total mileage for the shoe
+	 */
+	public function setMileage($value) {
+		$this->_mileage = $value;
 	}
 	
 	/**

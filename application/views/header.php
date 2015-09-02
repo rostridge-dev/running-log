@@ -9,6 +9,7 @@
 
 		<link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?php echo base_url(); ?>css/bootstrap.spacelab.min.css" rel="stylesheet">
+		<link href="<?php echo base_url(); ?>css/bootstrap-datepicker.min.css" rel="stylesheet">
 		<link href="<?php echo base_url(); ?>css/bootstrap.running-log.css" rel="stylesheet">
 		
 	</head>

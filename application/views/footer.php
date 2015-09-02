@@ -1,11 +1,17 @@
+		</div>
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
+		<script src="<?php echo base_url(); ?>js/bootstrap-datepicker.min.js"></script>
+		<script src="<?php echo base_url(); ?>js/scripts.js"></script>
+
 <?php
 	if (isset($footer_js)) {
 		echo $footer_js;
 	}
 ?>
-		<script type="text/javascript">
+		<script>
+			/*
 			$(function() {
 				// When using dates, must subtract one from the month; also need to add a padding day on either side of the x-axis
 				var dataEasy = [[(new Date(2015,06,01)).getTime(),5], [(new Date(2015,06,03)).getTime(),13]];
@@ -33,6 +39,7 @@
 					}
 				});
 			});
+			*/
 		</script>
 	</body>
 </html>

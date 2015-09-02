@@ -38,7 +38,7 @@
 						}
 					?>
 					<label class="required" for="purchase_date">Purchase Date</label>
-					<input type="text" class="form-control" id="purchase_date" name="purchase_date" value="<?php echo set_value('purchase_date', ($shoe->getPurchaseDate()) ? $shoe->getPurchaseDate() : ''); ?>">
+					<input type="text" data-provide="datepicker" class="form-control datepicker" id="purchase_date" name="purchase_date" value="<?php echo set_value('purchase_date', ($shoe->getPurchaseDate()) ? $shoe->getPurchaseDate() : ''); ?>">
 				</div>
 			</div>
 		</div>

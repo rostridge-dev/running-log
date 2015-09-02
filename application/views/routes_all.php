@@ -32,7 +32,7 @@ if (!empty($routes)) {
 							<td><p><a href="<?php echo base_url("routes/edit/".$route->getID()); ?>"><?php echo $route->getName(); ?></a></p></td>
 							<td><p><?php echo $route->getDistance(); ?> km</p></td>
 							<td><p><?php echo $route_surface_types[$route->getSurfaceID()]; ?></p></td>
-							<td><p><?php echo $route_types[$route->getTypeID()]; ?></td>
+							<td><p><?php echo $route_types[$route->getTypeID()]; ?></p></td>
 							<td><p class="text-right"><a class="text-danger" href="<?php echo base_url("routes/delete/".$route->getID()); ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</a></p></td>
 						</tr>
 <?

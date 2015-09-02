@@ -25,6 +25,12 @@ class Shoes extends MY_Controller {
 				$alias = "shoes".$row->id;
 				$ci->load->model('Shoe_model',$alias);
 				$shoes[$row->id] = $ci->{$alias}->load($row->id);
+				$this->db->select_sum('distance');
+				// Add in the total mileage at runtime
+				$subquery = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'shoe_id'=>$row->id,'user_id'=>$this->session->userdata('user_id')));
+				foreach ($subquery->result() as $subrow) {
+					$shoes[$row->id]->setMileage(number_format((float)$subrow->distance,0,'.',''));
+				}
 			}
 		}
 		$data['shoes'] = $shoes;
@@ -64,7 +70,11 @@ class Shoes extends MY_Controller {
 				$shoe->setModel($this->input->post('model'));
 				$shoe->setPurchaseDate($this->input->post('purchase_date'));
 				$shoe->setPrice($this->input->post('price'));
-				$shoe->setRetired($this->input->post('retired'));
+				if ($this->input->post('retired') == null) {
+					$shoe->setRetired(0);
+				} else {
+					$shoe->setRetired($this->input->post('retired'));
+				}
 				$shoe->setActive(true);
 				$shoe->add();
 				
@@ -116,7 +126,11 @@ class Shoes extends MY_Controller {
 					$shoe->setModel($this->input->post('model'));
 					$shoe->setPurchaseDate($this->input->post('purchase_date'));
 					$shoe->setPrice($this->input->post('price'));
-					$shoe->setRetired($this->input->post('retired'));
+					if ($this->input->post('retired') == null) {
+						$shoe->setRetired(0);
+					} else {
+						$shoe->setRetired($this->input->post('retired'));
+					}
 					$shoe->edit();
 				}
 				
