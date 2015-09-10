@@ -8,36 +8,17 @@
 						</div>
 						<table class="table">
 							<tbody>
+<?php
+	foreach ($data_last_six_weeks as $label => $weeks_data) {
+?>
 								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>33 km</td>
-									<td>2:40:05</td>
+									<td><strong><?php echo $label ?>:</strong></td>
+									<td><?php echo $weeks_data['distance'] ?> km</td>
+									<td><?php echo $weeks_data['time'] ?></td>
 								</tr>
-								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>55 km</td>
-									<td>1:34:05</td>
-								</tr>
-								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>12 km</td>
-									<td>2:06:05</td>
-								</tr>
-								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>33 km</td>
-									<td>2:40:05</td>
-								</tr>
-								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>55 km</td>
-									<td>1:34:05</td>
-								</tr>
-								<tr>
-									<td><strong>Apr 20, 2015 - Apr 26, 2015:</strong></td>
-									<td>12 km</td>
-									<td>2:06:05</td>
-								</tr>
+<?php
+	}
+?>
 							</tbody>
 						</table>
 					</div>
@@ -50,36 +31,17 @@
 						</div>
 						<table class="table">
 							<tbody>
+<?php
+	foreach ($data_last_six_months as $label => $months_data) {
+?>
 								<tr>
-									<td><strong>Apr 2015:</strong></td>
-									<td>33 km</td>
-									<td>2:40:05</td>
+									<td><strong><?php echo $label ?>:</strong></td>
+									<td><?php echo $months_data['distance'] ?> km</td>
+									<td><?php echo $months_data['time'] ?></td>
 								</tr>
-								<tr>
-									<td><strong>Mar 2015:</strong></td>
-									<td>55 km</td>
-									<td>1:34:05</td>
-								</tr>
-								<tr>
-									<td><strong>Feb 2015:</strong></td>
-									<td>12 km</td>
-									<td>2:06:05</td>
-								</tr>
-								<tr>
-									<td><strong>Jan 2015:</strong></td>
-									<td>33 km</td>
-									<td>2:40:05</td>
-								</tr>
-								<tr>
-									<td><strong>Dec 2014:</strong></td>
-									<td>55 km</td>
-									<td>1:34:05</td>
-								</tr>
-								<tr>
-									<td><strong>Nov 2015:</strong></td>
-									<td>12 km</td>
-									<td>2:06:05</td>
-								</tr>
+<?php
+	}
+?>
 							</tbody>
 						</table>
 					</div>	
@@ -94,11 +56,11 @@
 							<tbody>
 								<tr>
 									<td><strong>Distance:</strong></td>
-									<td>300 km</td>
+									<td><?php echo $distance_overall_year; ?> km</td>
 								</tr>
 								<tr>
 									<td><strong>Time:</strong></td>
-									<td>1:34:05</td>
+									<td><?php echo $time_overall_year; ?></td>
 								</tr>
 							</tbody>
 						</table>
@@ -111,11 +73,11 @@
 							<tbody>
 								<tr>
 									<td><strong>Distance:</strong></td>
-									<td>300 km</td>
+									<td><?php echo $distance_overall_total; ?> km</td>
 								</tr>
 								<tr>
 									<td><strong>Time:</strong></td>
-									<td>1:34:05</td>
+									<td><?php echo $time_overall_total; ?></td>
 								</tr>
 							</tbody>
 						</table>

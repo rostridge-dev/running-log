@@ -270,15 +270,15 @@ class Entries extends MY_Controller {
 	public function delete() {
 		
 		$id = $this->uri->segment(3);
-		$this->load->model('Route_model');
-		$route = $this->Route_model->load($id);
+		$this->load->model('Entry_model');
+		$entry = $this->Entry_model->load($id);
 		
 		// Make sure the current user is deleting their own routes
 		$user_id = $this->session->userdata('user_id');
-		if ($user_id == $route->getUserID()) {
-			$route->delete();
+		if ($user_id == $entry->getUserID()) {
+			$entry->delete();
 		}		
-		redirect(base_url()."routes");
+		redirect(base_url()."entries");
 		
 		
 	}
