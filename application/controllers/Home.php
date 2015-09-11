@@ -28,8 +28,8 @@ class Home extends MY_Controller {
 		$data_last_six_months = array();
 		$dates_last_six_months = $this->dates->returnPreviousMonths(6);
 		foreach($dates_last_six_months as $dates_months) {
-				$data_last_six_months[date("M Y",strtotime($dates_months['start']))]['distance'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'),$dates_months['start'],$dates_months['end']);
-				$data_last_six_months[date("M Y",strtotime($dates_months['start']))]['time'] = $this->times->returnTimeTotal($this->session->userdata('user_id'),$dates_months['start'],$dates_months['end']);
+			$data_last_six_months[date("M Y",strtotime($dates_months['start']))]['distance'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'),$dates_months['start'],$dates_months['end']);
+			$data_last_six_months[date("M Y",strtotime($dates_months['start']))]['time'] = $this->times->returnTimeTotal($this->session->userdata('user_id'),$dates_months['start'],$dates_months['end']);
 		}
 		$data['data_last_six_months'] = $data_last_six_months;
 		
@@ -37,17 +37,23 @@ class Home extends MY_Controller {
 		$data_last_six_weeks = array();
 		$dates_last_six_weeks = $this->dates->returnPreviousWeeks(6);
 		foreach($dates_last_six_weeks as $dates_weeks) {
-				$data_last_six_weeks[date("M j, Y",strtotime($dates_weeks['start'])).' - '.date("M j, Y",strtotime($dates_weeks['end']))]['distance'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'),$dates_weeks['start'],$dates_weeks['end']);
-				$data_last_six_weeks[date("M j, Y",strtotime($dates_weeks['start'])).' - '.date("M j, Y",strtotime($dates_weeks['end']))]['time'] = $this->times->returnTimeTotal($this->session->userdata('user_id'),$dates_weeks['start'],$dates_weeks['end']);
+			$data_last_six_weeks[date("M j, Y",strtotime($dates_weeks['start'])).' - '.date("M j, Y",strtotime($dates_weeks['end']))]['distance'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'),$dates_weeks['start'],$dates_weeks['end']);
+			$data_last_six_weeks[date("M j, Y",strtotime($dates_weeks['start'])).' - '.date("M j, Y",strtotime($dates_weeks['end']))]['time'] = $this->times->returnTimeTotal($this->session->userdata('user_id'),$dates_weeks['start'],$dates_weeks['end']);
 		}
 		$data['data_last_six_weeks'] = $data_last_six_weeks;
 		
 		// Load the Flot library
 		$this->load->library('flot');
 		
+		// Grab the data for the last two weeks to graph
+		$today = date("Y-m-d");
+		$two_weeks_ago = date("Y-m-d",strtotime($today." -2 weeks"));
+		$two_weeks_list = $this->distances->returnDistanceList($this->session->userdata('user_id'),$two_weeks_ago,$today);
+		$graph_data = $this->flot->buildDailyGraph($two_weeks_list);
+		
 		// Load the view for this controller
 		$data['title'] = "Home";
-		$data['footer_js'] = $this->flot->returnJS();
+		$data['footer_js'] = $this->flot->returnFooterJS().$this->flot->returnFrontPageInit($graph_data,$two_weeks_ago,$today);
 		$this->template->view('home',$data);
 	}
 }
