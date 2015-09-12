@@ -43,7 +43,7 @@ class Times {
  	 * @param string $time The time in format HH:MM:SS
 	 * @return integer $seconds Returns the total time in seconds
 	 */
-	private function convertToSeconds($time) {
+	public function convertToSeconds($time) {
 		$segments = explode(':',$time);
 		$length = count($segments);
 		switch ($length) {

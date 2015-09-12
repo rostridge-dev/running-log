@@ -13,38 +13,50 @@ class Entries extends MY_Controller {
 		
 		$data = array();
 		
-		// Get the list of run types
-		$data['run_types'] = $this->config->item('run_types');
+		// Check to see that we have everything we need to add an entry
+		$requirements = $this->checkRequirements();
+		if ($requirements['validated']) {	
 		
-		// Get the list of active routes
-		$routes = array();
-		$this->db->order_by('name','ASC');
-		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$alias = "routes".$row->id;
-				$ci->load->model('Route_model',$alias);
-				$routes[$row->id] = $ci->{$alias}->load($row->id);
+			// Get the list of run types
+			$data['run_types'] = $this->config->item('run_types');
+			
+			// Get the list of active routes
+			$routes = array();
+			$this->db->order_by('name','ASC');
+			$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+			if ($query->num_rows() > 0) {
+				foreach ($query->result() as $row) {
+					$alias = "routes".$row->id;
+					$ci->load->model('Route_model',$alias);
+					$routes[$row->id] = $ci->{$alias}->load($row->id);
+				}
 			}
-		}
-		$data['routes'] = $routes;
-		
-		// Get the list of active entries
-		$entries = array();
-		$this->db->order_by('date','DESC');
-		$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$alias = "entries".$row->id;
-				$ci->load->model('Entry_model',$alias);
-				$entries[$row->id] = $ci->{$alias}->load($row->id);
+			$data['routes'] = $routes;
+			
+			// Get the list of active entries
+			$entries = array();
+			$this->db->order_by('date','DESC');
+			$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+			if ($query->num_rows() > 0) {
+				foreach ($query->result() as $row) {
+					$alias = "entries".$row->id;
+					$ci->load->model('Entry_model',$alias);
+					$entries[$row->id] = $ci->{$alias}->load($row->id);
+				}
 			}
+			$data['entries'] = $entries;
+			
+			// Load the view for this controller
+			$data['title'] = "Entries";
+			$this->template->view('entries_all',$data);
+			
+		} else {
+			
+			// Load the view for this controller
+			$data['title'] = "Entries";
+			$data['message'] = $requirements['message'];
+			$this->template->view('errors',$data);
 		}
-		$data['entries'] = $entries;
-		
-		// Load the view for this controller
-		$data['title'] = "Entries";
-		$this->template->view('entries_all',$data);
 	}
 	
 	/**
@@ -103,53 +115,66 @@ class Entries extends MY_Controller {
 			}
 		}
 	
-		$data = array();		
-		$data['title'] = "Entries: Add";
-		$data['form_action'] = "entries/add";
-		$data['entry'] = $entry;
+		$data = array();
+
+		// Check to see that we have everything we need to add an entry
+		$requirements = $this->checkRequirements();
+		if ($requirements['validated']) {	
 		
-		// Get the list of run types
-		$data['run_types'] = $this->config->item('run_types');
-		
-		// Get the list of weather types
-		$data['weather_types'] = $this->config->item('weather_types');
-		
-		// Get the list of active routes
-		$routes = $routes_list = array();
-		$this->db->order_by('name','ASC');
-		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$alias = "routes".$row->id;
-				$ci->load->model('Route_model',$alias);
-				$routes_list[$row->id] = $ci->{$alias}->load($row->id);
-				$routes[$row->id] = $routes_list[$row->id]->getName();
+			$data['title'] = "Entries: Add";
+			$data['form_action'] = "entries/add";
+			$data['entry'] = $entry;
+			
+			// Get the list of run types
+			$data['run_types'] = $this->config->item('run_types');
+			
+			// Get the list of weather types
+			$data['weather_types'] = $this->config->item('weather_types');
+			
+			// Get the list of active routes
+			$routes = $routes_list = array();
+			$this->db->order_by('name','ASC');
+			$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+			if ($query->num_rows() > 0) {
+				foreach ($query->result() as $row) {
+					$alias = "routes".$row->id;
+					$ci->load->model('Route_model',$alias);
+					$routes_list[$row->id] = $ci->{$alias}->load($row->id);
+					$routes[$row->id] = $routes_list[$row->id]->getName();
+				}
 			}
-		}
-		$data['routes'] = $routes;
-		
-		// Get the list of shoe manufacturers
-		$data['makes'] = $this->config->item('shoe_manufacturers');
-		
-		// Get the list of active shoes
-		$shoes = $shoes_list = array();
-		$this->db->order_by('id','DESC');
-		$query = $this->db->get_where('shoes',array('retired'=>false,'active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-		if ($query->num_rows() > 0) {
-			foreach ($query->result() as $row) {
-				$alias = "shoes".$row->id;
-				$ci->load->model('Shoe_model',$alias);
-				$shoes_list[$row->id] = $ci->{$alias}->load($row->id);
-				$shoes[$row->id] = $data['makes'][$shoes_list[$row->id]->getMakeID()]." ".$shoes_list[$row->id]->getModel();
+			$data['routes'] = $routes;
+			
+			// Get the list of shoe manufacturers
+			$data['makes'] = $this->config->item('shoe_manufacturers');
+			
+			// Get the list of active shoes
+			$shoes = $shoes_list = array();
+			$this->db->order_by('id','DESC');
+			$query = $this->db->get_where('shoes',array('retired'=>false,'active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+			if ($query->num_rows() > 0) {
+				foreach ($query->result() as $row) {
+					$alias = "shoes".$row->id;
+					$ci->load->model('Shoe_model',$alias);
+					$shoes_list[$row->id] = $ci->{$alias}->load($row->id);
+					$shoes[$row->id] = $data['makes'][$shoes_list[$row->id]->getMakeID()]." ".$shoes_list[$row->id]->getModel();
+				}
 			}
+			$data['shoes'] = $shoes;
+			
+			// Add some JS for controlling the race portion of the form
+			$data['footer_js'] = $this->entryRaceJS();
+			
+			//load the template view
+			$this->template->view('entries_form',$data);
+		
+		} else {
+			
+			// Load the view for this controller
+			$data['title'] = "Entries";
+			$data['message'] = $requirements['message'];
+			$this->template->view('errors',$data);
 		}
-		$data['shoes'] = $shoes;
-		
-		// Add some JS for controlling the race portion of the form
-		$data['footer_js'] = $this->entryRaceJS();
-		
-		//load the template view
-		$this->template->view('entries_form',$data);
 	
 	}
 	
@@ -318,32 +343,60 @@ class Entries extends MY_Controller {
 	 */
 	private function setValidation() {
 		
-			// Load the form validation library
-			$this->load->library('form_validation');
-			$this->form_validation->set_error_delimiters('<div class="bg-danger"><p class="text-danger">&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> ','</p></div>');
+		// Load the form validation library
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="bg-danger"><p class="text-danger">&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> ','</p></div>');
+	
+		// Assign validation rules
+		$this->form_validation->set_rules('date', 'Date', 'required');
+		$this->form_validation->set_rules('time_of_day', 'Time of day', 'required');
+		$this->form_validation->set_rules('type_id', 'Run type', 'required|integer');
+		$this->form_validation->set_rules('route_id', 'Route', 'required|integer');
+		$this->form_validation->set_rules('shoe_id', 'Shoe', 'required|integer');
+		$this->form_validation->set_rules('distance', 'Distance', 'required|numeric');
+		$this->form_validation->set_rules('time', 'Time', 'required');
+		$this->form_validation->set_rules('quality', 'Quality', 'integer');
+		$this->form_validation->set_rules('effort', 'Effort', 'integer');
+		$this->form_validation->set_rules('temperature', 'Temperature', 'integer');
 		
-			// Assign validation rules
-			$this->form_validation->set_rules('date', 'Date', 'required');
-			$this->form_validation->set_rules('time_of_day', 'Time of day', 'required');
-			$this->form_validation->set_rules('type_id', 'Run type', 'required|integer');
-			$this->form_validation->set_rules('route_id', 'Route', 'required|integer');
-			$this->form_validation->set_rules('shoe_id', 'Shoe', 'required|integer');
-			$this->form_validation->set_rules('distance', 'Distance', 'required|numeric');
-			$this->form_validation->set_rules('time', 'Time', 'required');
-			$this->form_validation->set_rules('quality', 'Quality', 'integer');
-			$this->form_validation->set_rules('effort', 'Effort', 'integer');
-			$this->form_validation->set_rules('temperature', 'Temperature', 'integer');
-			
-			if($this->input->post('is_race') == 1){
-				$this->form_validation->set_rules('placement', 'Overall position', 'required|integer');
-				$this->form_validation->set_rules('field', 'Size of field', 'required|integer');
-				$this->form_validation->set_rules('group_min_age', 'Age group min', 'integer');
-				$this->form_validation->set_rules('group_max_age', 'Age group max', 'integer');
-				$this->form_validation->set_rules('group_age_placement', 'Age group placement', 'integer');
-				$this->form_validation->set_rules('group_age_size', 'Age group size', 'integer');
-				$this->form_validation->set_rules('group_gender_placement', 'Gender group placement', 'integer');
-				$this->form_validation->set_rules('group_gender_size', 'Gender group size', 'integer');
-			}
+		if($this->input->post('is_race') == 1){
+			$this->form_validation->set_rules('placement', 'Overall position', 'required|integer');
+			$this->form_validation->set_rules('field', 'Size of field', 'required|integer');
+			$this->form_validation->set_rules('group_min_age', 'Age group min', 'integer');
+			$this->form_validation->set_rules('group_max_age', 'Age group max', 'integer');
+			$this->form_validation->set_rules('group_age_placement', 'Age group placement', 'integer');
+			$this->form_validation->set_rules('group_age_size', 'Age group size', 'integer');
+			$this->form_validation->set_rules('group_gender_placement', 'Gender group placement', 'integer');
+			$this->form_validation->set_rules('group_gender_size', 'Gender group size', 'integer');
+		}
+		
+	}
+	
+	/**
+	 * Checks to see if we can view, add, edit entries; must have at least one route AND one shoe in the system
+	 *
+	 */
+	private function checkRequirements() {
+		
+		$requirements = array();
+		$requirements['validated'] = true;
+		$requirements['message'] = "OK";
+		
+		// Check to see if any routes have been added
+		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() == 0) {
+			$requirements['validated'] = false;
+			$requirements['message'] = "There are no routes entered into the system. Please add at least one route before adding an entry.";
+		}
+		
+		// Check to see if any shoes have been added
+		$query = $this->db->get_where('shoes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() == 0) {
+			$requirements['validated'] = false;
+			$requirements['message'] = "There are no shoes entered into the system. Please add at least one shoe before adding an entry.";
+		}
+		
+		return $requirements;
 		
 	}
 }
