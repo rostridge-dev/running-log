@@ -26,3 +26,8 @@ div#navbar-user a:hover {
 .flot-x-axis .tickLabel {
 	font-size: 75%;
 }
+
+.required:after {
+	color: #c09853;
+	content: " (required)";
+}

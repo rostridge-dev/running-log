@@ -121,7 +121,7 @@
 									echo form_error('quality');
 								}
 							?>
-							<label class="required" for="quality">Quality</label>
+							<label for="quality">Quality</label>
 							<br class="clearfix">
 		<?php
 			for ($counter = 1; $counter <= 10; $counter++) {
@@ -151,7 +151,7 @@
 									echo form_error('effort');
 								}
 							?>
-							<label class="required" for="effort">Effort</label>
+							<label for="effort">Effort</label>
 							<br class="clearfix">
 		<?php
 			for ($counter = 1; $counter <= 10; $counter++) {
@@ -181,7 +181,7 @@
 									echo form_error('weather');
 								}
 							?>
-							<label class="required" for="weather">Weather</label>
+							<label for="weather">Weather</label>
 							<br class="clearfix">
 		<?php
 			$rows = 0;
@@ -219,7 +219,7 @@
 									echo form_error('temperature');
 								}
 							?>
-							<label class="required" for="temperature">Temperature (C)</label>
+							<label for="temperature">Temperature (C)</label>
 							<input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo set_value('temperature', ($entry->getTemperature()) ? $entry->getTemperature() : ''); ?>">
 						</div>
 					</div>
@@ -233,7 +233,7 @@
 									echo form_error('notes');
 								}
 							?>
-							<label class="required" for="notes">Notes</label>
+							<label for="notes">Notes</label>
 							<textarea class="form-control" id="notes" name="notes" rows="3"><?php echo set_value('notes', ($entry->getNotes()) ? $entry->getNotes() : ''); ?></textarea>
 						</div>
 					</div>
@@ -292,7 +292,7 @@
 													echo form_error('group_min_age');
 												}
 											?>
-											<label class="required" for="group_min_age">Age Group Min</label>
+											<label for="group_min_age">Age Group Min</label>
 											<input type="text" class="form-control" id="group_min_age" name="group_min_age" value="<?php echo set_value('group_min_age', ($entry->getGroupMinAge()) ? $entry->getGroupMinAge() : ''); ?>">
 										</div>
 									</div>
@@ -303,7 +303,7 @@
 													echo form_error('group_max_age');
 												}
 											?>
-											<label class="required" for="group_max_age">Age Group Max</label>
+											<label for="group_max_age">Age Group Max</label>
 											<input type="text" class="form-control" id="group_max_age" name="group_max_age" value="<?php echo set_value('group_max_age', ($entry->getGroupMaxAge()) ? $entry->getGroupMaxAge() : ''); ?>">
 										</div>
 									</div>
@@ -316,7 +316,7 @@
 													echo form_error('group_age_placement');
 												}
 											?>
-											<label class="required" for="group_age_placement">Age Group Position</label>
+											<label for="group_age_placement">Age Group Position</label>
 											<input type="text" class="form-control" id="group_age_placement" name="group_age_placement" value="<?php echo set_value('group_age_placement', ($entry->getGroupAgePlacement()) ? $entry->getGroupAgePlacement() : ''); ?>">
 										</div>
 									</div>
@@ -327,7 +327,7 @@
 													echo form_error('group_age_size');
 												}
 											?>
-											<label class="required" for="group_age_size">Age Group Size</label>
+											<label for="group_age_size">Age Group Size</label>
 											<input type="text" class="form-control" id="group_age_size" name="group_age_size" value="<?php echo set_value('group_age_size', ($entry->getGroupAgeSize()) ? $entry->getGroupAgeSize() : ''); ?>">
 										</div>
 									</div>
@@ -341,7 +341,7 @@
 													echo form_error('group_gender_placement');
 												}
 											?>
-											<label class="required" for="group_gender_placement">Gender Group Position</label>
+											<label for="group_gender_placement">Gender Group Position</label>
 											<input type="text" class="form-control" id="group_gender_placement" name="group_gender_placement" value="<?php echo set_value('group_gender_placement', ($entry->getGroupGenderPlacement()) ? $entry->getGroupGenderPlacement() : ''); ?>">
 										</div>
 									</div>
@@ -352,7 +352,7 @@
 													echo form_error('group_gender_size');
 												}
 											?>
-											<label class="required" for="group_gender_size">Gender Group Size</label>
+											<label for="group_gender_size">Gender Group Size</label>
 											<input type="text" class="form-control" id="group_gender_size" name="group_gender_size" value="<?php echo set_value('group_gender_size', ($entry->getGroupGenderSize()) ? $entry->getGroupGenderSize() : ''); ?>">
 										</div>
 									</div>

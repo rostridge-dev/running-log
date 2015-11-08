@@ -32,6 +32,13 @@ class User_model extends MY_Model {
 	protected $_lastname;
 	
 	/**
+	 * The password of this user (set only)
+	 *
+	 * @var string
+	 */
+	protected $_password;
+	
+	/**
 	 * The active status of this user
 	 *
 	 * @var string
@@ -69,6 +76,37 @@ class User_model extends MY_Model {
 	}
 	
 	/**
+	 * Edits an entry for this model
+	 *
+	 * @return boolean
+	 */
+	public function edit() {
+		
+		if ($this->_password != "") {
+			$data = array(
+				'id' => $this->_id,
+				'username' => $this->_username,
+				'firstname' => $this->_firstname,
+				'lastname' => $this->_lastname,
+				'password' => $this->_password,
+				'active' => $this->_active			
+			);
+		} else {	
+			$data = array(
+				'id' => $this->_id,
+				'username' => $this->_username,
+				'firstname' => $this->_firstname,
+				'lastname' => $this->_lastname,
+				'active' => $this->_active			
+			);
+		}
+		$this->db->where('id',$this->_id);
+		$this->db->update($this->_table,$data);
+		
+		return true;
+	}	
+	
+	/**
 	 * Authenticate the user
 	 *
 	 * @param string $username The username to authenticate
@@ -89,12 +127,39 @@ class User_model extends MY_Model {
 	}
 	
 	/**
+	 * Get the username for the user
+	 *
+	 * @return string
+	 */
+	public function getUsername() {
+		return $this->_username;
+	}
+	
+	/**
+	 * Set the username for the user
+	 *
+	 * @param string $value The value of the username
+	 */
+	public function setUsername($value) {
+		$this->_username = $value;
+	}
+	
+	/**
 	 * Get the first name for the user
 	 *
 	 * @return string
 	 */
 	public function getFirstname() {
 		return $this->_firstname;
+	}
+
+	/**
+	 * Set the first name for the user
+	 *
+	 * @param string $value The first name
+	 */
+	public function setFirstname($value) {
+		$this->_firstname = $value;
 	}
 	
 	/**
@@ -104,6 +169,33 @@ class User_model extends MY_Model {
 	 */
 	public function getLastname() {
 		return $this->_lastname;
+	}
+	
+	/**
+	 * Set the last name for the user
+	 *
+	 * @param string $value The last name
+	 */
+	public function setLastname($value) {
+		$this->_lastname = $value;
+	}
+	
+	/**
+	 * Set the password for the user
+	 *
+	 * @param string $value The password
+	 */
+	public function setPassword($value) {
+		$this->_password = $value;
+	}
+	
+	/**
+	 * Set the active status for the user
+	 *
+	 * @param boolean $value The active status of the user
+	 */
+	public function setActive($value) {
+		$this->_active = $value;
 	}
 
 }

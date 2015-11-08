@@ -94,7 +94,7 @@
 							<h3 class="panel-title">Last Two Weeks at a Glance</h3>
 						</div>
 						<div class="panel-body">
-							<div id="placeholder" style="width:100%;height:500px;"></div>
+							<div id="placeholder" style="width:100%;height:375px;"></div>
 						</div>
 					</div>
 				</div>

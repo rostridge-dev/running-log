@@ -31,7 +31,7 @@ class Distances {
 				$distance = number_format((float)$row->distance,0,'.','');
 			}
 		}
-		
+				
 		return $distance;
 		
 	}

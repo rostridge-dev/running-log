@@ -66,7 +66,7 @@
 								echo form_error('retired');
 							}
 						?>
-						<label class="required" for="retired">
+						<label for="retired">
 							<?php echo form_checkbox('retired','1',set_value('retired',($shoe->getRetired()) ? true : false),'id="retired"'); ?>
 							Retired
 						</label>
