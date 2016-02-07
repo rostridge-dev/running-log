@@ -43,6 +43,7 @@
 						<li><a href="<?php echo base_url(); ?>routes">Routes</a></li>
 						<li><a href="<?php echo base_url(); ?>shoes">Shoes</a></li>
 						<li><a href="<?php echo base_url(); ?>records">Records</a></li>
+						<li><a href="<?php echo base_url(); ?>reports">Reports</a></li>
 						<li><form action="<?php echo base_url(); ?>entries/add" method="get"><button class="btn btn-default navbar-btn" type="submit">Add New Entry</button></form></li>
 					</ul>
 				</div><!--/.navbar-collapse -->

@@ -8,18 +8,24 @@ class Distances {
  	 * @param integer $user_id The user ID that is used to locate the runs
 	 * @param datestamp $start The start date of the running query (YYYY-MM-DD)
  	 * @param datestamp $end The end date of the running query (YYYY-MM-DD)
+ 	 * @param integer $type The type of entry to be located (easy, long, etc)
 	 * @return number $distance Returns the distance calculated between the two dates
 	 */
-    public function returnDistanceTotal($user_id,$start=NULL,$end=NULL) {
+    public function returnDistanceTotal($user_id,$start=NULL,$end=NULL,$type=NULL) {
 		
 		$CI =& get_instance();
 		
 		$CI->db->where('user_id',$user_id);
 		$CI->db->where('active',1);
 		$CI->db->where('deleted',NULL);
-		if ($start != NULL && $end != NULL) {
+		if (($start != NULL) || ($start != "")) {
 			$CI->db->where('date >= ',$start);
+		}
+		if (($end != NULL) || ($end != "")) {
 			$CI->db->where('date <=',$end);
+		}
+		if (($type != NULL) || ($type != "")) {
+			$CI->db->where('type_id = ',$type);
 		}
 		$CI->db->select_sum('distance');
 		$query = $CI->db->get('entries');
@@ -42,19 +48,25 @@ class Distances {
  	 * @param integer $user_id The user ID that is used to locate the runs
 	 * @param datestamp $start The start date of the running query (YYYY-MM-DD)
  	 * @param datestamp $end The end date of the running query (YYYY-MM-DD)
+ 	 * @param integer $type The type of entry to be located (easy, long, etc)
 	 * @return number $distance Returns the distance calculated between the two dates
 	 */
-    public function returnDistanceList($user_id,$start=NULL,$end=NULL) {
+    public function returnDistanceList($user_id,$start=NULL,$end=NULL,$type=NULL) {
 		
 		$CI =& get_instance();
 		
-		$CI->db->order_by('date','ASC');
+		$CI->db->order_by('date','DESC');
 		$CI->db->where('user_id',$user_id);
 		$CI->db->where('active',1);
 		$CI->db->where('deleted',NULL);
-		if ($start != NULL && $end != NULL) {
+		if (($start != NULL) || ($start != "")) {
 			$CI->db->where('date >= ',$start);
+		}
+		if (($end != NULL) || ($end != "")) {
 			$CI->db->where('date <=',$end);
+		}
+		if (($type != NULL) || ($type != "")) {
+			$CI->db->where('type_id = ',$type);
 		}
 		$query = $CI->db->get('entries');
 

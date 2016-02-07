@@ -34,7 +34,7 @@ if (!empty($entries)) {
 } else {
 ?>
 						<tr>
-							<td colspan="6"><p class="text-center">There are no entries entered into the system. Please add at least one entry.</p></td>
+							<td colspan="7"><p class="text-center">There are no entries entered into the system. Please add at least one entry.</p></td>
 						</tr>
 <?	
 }

@@ -50,7 +50,7 @@
 				<div class="col-md-4">	
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">2015 Statistics</h3>
+							<h3 class="panel-title"><?php echo date("Y"); ?> Statistics</h3>
 						</div>
 						<table class="table">
 							<tbody>
