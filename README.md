@@ -2,7 +2,7 @@
 Simple running log application inspired by the Classic Running Log found on RunnersWorld.com
 
 ## Built with:
-- Codeigniter (3.0.2) http://www.codeigniter.com/
+- Codeigniter (3.0.3) http://www.codeigniter.com/
 - jQuery (1.11.2) https://jquery.com/
 - Bootstrap (3.3.5) http://getbootstrap.com/
 - Bootstrap Datepicker (2.0) https://github.com/eternicode/bootstrap-datepicker
