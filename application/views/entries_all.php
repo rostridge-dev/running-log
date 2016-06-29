@@ -15,24 +15,15 @@
 							<td>&nbsp;</td>
 						</tr>
 					</thead>
-					<tbody>
-<?
-if (!empty($entries)) {
-	foreach($entries as $id=>$entry) {
-?>
+					<tbody id="entries-list">
 						<tr>
-							<td><p><a href="<?php echo base_url("entries/edit/".$entry->getID()); ?>"><?php echo $entry->getDate(); ?></a></p></td>
-							<td><p><?php echo $routes[$entry->getRouteID()]->getName(); ?></p></td>
-							<td><p><?php echo $run_types[$entry->getTypeID()]; ?></p></td>
-							<td><p><?php echo $entry->getDistance(); ?> km</p></td>
-							<td><p><?php echo $entry->getTime(); ?></p></td>
-							<td><p><?php echo $entry->getPace(); ?></p></td>
-							<td><p class="text-right"><a class="text-danger" href="<?php echo base_url("entries/delete/".$entry->getID()); ?>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</a></p></td>
+							<td colspan="7"><p class="text-center">...loading entries...</p></td>
 						</tr>
+					
 <?
-	}
-} else {
-?>
+if ($count <= 0) {
+?>				
+	
 						<tr>
 							<td colspan="7"><p class="text-center">There are no entries entered into the system. Please add at least one entry.</p></td>
 						</tr>

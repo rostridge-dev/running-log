@@ -9,45 +9,29 @@ class Entries extends MY_Controller {
 	 */
 	public function index() {
 		
-		$ci =& get_instance();
-		
 		$data = array();
 		
 		// Check to see that we have everything we need to add an entry
 		$requirements = $this->checkRequirements();
-		if ($requirements['validated']) {	
-		
-			// Get the list of run types
-			$data['run_types'] = $this->config->item('run_types');
+		if ($requirements['validated']) {
 			
-			// Get the list of active routes
-			$routes = array();
-			$this->db->order_by('name','ASC');
-			$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-			if ($query->num_rows() > 0) {
-				foreach ($query->result() as $row) {
-					$alias = "routes".$row->id;
-					$ci->load->model('Route_model',$alias);
-					$routes[$row->id] = $ci->{$alias}->load($row->id);
-				}
-			}
-			$data['routes'] = $routes;
-			
-			// Get the list of active entries
-			$entries = array();
-			$this->db->order_by('date','DESC');
+			// Count all the active runs for this user
 			$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-			if ($query->num_rows() > 0) {
-				foreach ($query->result() as $row) {
-					$alias = "entries".$row->id;
-					$ci->load->model('Entry_model',$alias);
-					$entries[$row->id] = $ci->{$alias}->load($row->id);
-				}
-			}
-			$data['entries'] = $entries;
-			
+			$data['count'] = $query->num_rows();
+			$data['limit'] = 50;
+			$data['page'] = 1;
+		
 			// Load the view for this controller
 			$data['title'] = "Entries";
+			$js = "";
+			$js .= "	<script>\n";
+			$js .= "		$(function() {\n";
+			$js .= "			$.ajax({url: '".base_url("entries/show/".$data['limit']."/".$data['page'])."', success: function(result){\n";
+			$js .= "				$('#entries-list').html(result);\n";
+			$js .= "			}});\n";
+			$js .= "		});\n";
+			$js .= "	</script>\n";
+			$data['footer_js'] = $js;
 			$this->template->view('entries_all',$data);
 			
 		} else {
@@ -60,7 +44,23 @@ class Entries extends MY_Controller {
 	}
 	
 	/**
-	 * The add route method
+	 * Displays a set of rows for a specificed number of entries
+	 *
+	 */
+	public function show($limit=50,$page=1) {
+		
+		$data = array();
+		
+		// Grab a list of the entries
+		$data = $this->find($limit,$page);
+			
+		// Load the view for this controller
+		$this->load->view('entries_ajax',$data);
+			
+	}
+	
+	/**
+	 * The add entry method
 	 *
 	 */
 	public function add() {
@@ -179,7 +179,7 @@ class Entries extends MY_Controller {
 	}
 	
 	/**
-	 * The edit route method
+	 * The edit entry method
 	 *
 	 */
 	public function edit() {
@@ -398,5 +398,62 @@ class Entries extends MY_Controller {
 		
 		return $requirements;
 		
+	}
+	
+	/**
+	 * Loads a data list of entries based upon a limit and pagination value (offset repeats based upon initial limit)
+	 *
+ 	 * @param integer $limit The number of entries to be returned in this list
+	 * @param integer $page The current page of results to be returned (starting at an offset based upon limit)
+	 * @return array $data An array containing all the data related to this list
+	 */
+	private function find($limit=0,$page=1) {
+		
+		$ci =& get_instance();
+		$data = array();
+		
+		$data['limit'] = $limit;
+		$data['page'] = $page;
+		$data['offset'] = ($page - 1) * $limit;
+		
+		$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		$data['count'] = $query->num_rows();
+		
+		// Get the list of run types
+		$data['run_types'] = $this->config->item('run_types');
+		
+		// Get the list of active routes
+		$routes = array();
+		$this->db->order_by('name','ASC');
+		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$alias = "routes".$row->id;
+				$ci->load->model('Route_model',$alias);
+				$routes[$row->id] = $ci->{$alias}->load($row->id);
+			}
+		}
+		$data['routes'] = $routes;
+			
+		// Get the list of active entries
+		$entries = array();
+		$this->db->order_by('date','DESC');
+		if (($data['limit'] > 0) && ($data['offset'] == 0)) {
+			$this->db->limit($data['limit']);
+		}
+		if (($data['limit'] > 0) && ($data['offset'] > 0)) {
+			$this->db->limit($data['limit'],$data['offset']);
+		}
+		$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$alias = "entries".$row->id;
+				$ci->load->model('Entry_model',$alias);
+				$entries[$row->id] = $ci->{$alias}->load($row->id);
+			}
+		}
+		$data['entries'] = $entries;
+		
+		return $data;
 	}
 }

@@ -64,7 +64,7 @@ class Report_model extends MY_Model {
 		$results['entries'] = array();
 		
 		$results['distance'] = $CI->distances->returnDistanceTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
-		$results['time'] = $CI->times->returnTimeTotal($this->_user_id,$this->_start_date,$this->_end_date);
+		$results['time'] = $CI->times->returnTimeTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
 		$results['entries'] = $CI->distances->returnDistanceList($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
 		$results['count'] = count($results['entries']);
 		
