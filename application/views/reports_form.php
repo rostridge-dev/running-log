@@ -15,7 +15,7 @@
 					<div class="panel-body">
 	
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<?php 
 										if(form_error('start_date')){
@@ -26,7 +26,7 @@
 									<input type="text" data-provide="datepicker" class="form-control datepicker" id="start_date" name="start_date" value="<?php echo set_value('start_date', ($report->getStartDate()) ? $report->getStartDate() : ''); ?>">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<?php 
 										if(form_error('end_date')){
@@ -37,7 +37,7 @@
 									<input type="text" data-provide="datepicker" class="form-control datepicker" id="end_date" name="end_date" value="<?php echo set_value('end_date', ($report->getEndDate()) ? $report->getEndDate() : ''); ?>">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<?php
 										if(form_error('type_id')){
@@ -46,6 +46,17 @@
 									?>
 									<label for="type_id">Run Type</label>
 									<?php echo form_dropdown('type_id',$run_types,set_value('type_id',($report->getTypeID()) ? $report->getTypeID() : ''),'id="type_id" class="form-control"'); ?>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<?php
+										if(form_error('route_id')){
+											echo form_error('route_id');
+										}
+									?>
+									<label for="route_id">Route</label>
+									<?php echo form_dropdown('route_id',$routes,set_value('route_id',($report->getRouteID()) ? $report->getRouteID() : ''),'id="route_id" class="form-control"'); ?>
 								</div>
 							</div>
 						</div>
@@ -93,7 +104,7 @@ if (!empty($results['entries'])) {
 ?>
 						<tr>
 							<td><p><a target="entry-window" href="<?php echo base_url("entries/edit/".$entry->getID()); ?>"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> <?php echo $entry->getDate(); ?></a></p></td>
-							<td><p><?php echo $routes[$entry->getRouteID()]->getName(); ?></p></td>
+							<td><p><?php echo $routes_list[$entry->getRouteID()]->getName(); ?></p></td>
 							<td><p><?php echo $run_types[$entry->getTypeID()]; ?></p></td>
 							<td><p><?php echo $entry->getDistance(); ?> km</p></td>
 							<td><p><?php echo $entry->getTime(); ?></p></td>

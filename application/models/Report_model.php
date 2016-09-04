@@ -31,6 +31,13 @@ class Report_model extends MY_Model {
 	 */
 	protected $_type_id;
 	
+	/**
+	 * The route ID of the report
+	 *
+	 * @var integer
+	 */
+	protected $_route_id;
+	
 	public function __construct() {
 		parent::__construct();
 	}
@@ -63,9 +70,9 @@ class Report_model extends MY_Model {
 		$results['time'] = NULL;
 		$results['entries'] = array();
 		
-		$results['distance'] = $CI->distances->returnDistanceTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
-		$results['time'] = $CI->times->returnTimeTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
-		$results['entries'] = $CI->distances->returnDistanceList($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id);
+		$results['distance'] = $CI->distances->returnDistanceTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id,$this->_route_id);
+		$results['time'] = $CI->times->returnTimeTotal($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id,$this->_route_id);
+		$results['entries'] = $CI->distances->returnDistanceList($this->_user_id,$this->_start_date,$this->_end_date,$this->_type_id,$this->_route_id);
 		$results['count'] = count($results['entries']);
 		
 		return $results;
@@ -141,5 +148,23 @@ class Report_model extends MY_Model {
 	 */
 	public function setTypeID($value) {
 		$this->_type_id = $value;
+	}
+	
+	/**
+	 * Get the route ID for the report
+	 *
+	 * @return integer
+	 */
+	public function getRouteID() {
+		return $this->_route_id;
+	}
+	
+	/**
+	 * Set the route ID for the report
+	 *
+	 * @param integer $value The route ID of the report
+	 */
+	public function setRouteID($value) {
+		$this->_route_id = $value;
 	}
 }

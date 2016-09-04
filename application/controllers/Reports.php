@@ -9,11 +9,27 @@ class Reports extends MY_Controller {
 	 */
 	public function index() {
 		
+		$ci =& get_instance();
+		
 		$this->load->model('Report_model');
 		$report = $this->Report_model->instance();
 		
 		// Get the list of run types
 		$data['run_types'] = $this->insertEmptyIndex($this->config->item('run_types'));
+		
+		// Get the list of active routes
+		$routes = $routes_list = array();
+		$this->db->order_by('name','ASC');
+		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$alias = "routes".$row->id;
+				$ci->load->model('Route_model',$alias);
+				$routes_list[$row->id] = $ci->{$alias}->load($row->id);
+				$routes[$row->id] = $routes_list[$row->id]->getName();
+			}
+		}
+		$data['routes'] = $this->insertEmptyIndex($routes);
 		
 		$data['report'] = $report;
 		$data['form_action'] = "reports/results";
@@ -38,6 +54,21 @@ class Reports extends MY_Controller {
 		// Get the list of run types
 		$data['run_types'] = $this->insertEmptyIndex($this->config->item('run_types'));
 		
+		// Get the list of active routes
+		$routes = $routes_list = array();
+		$this->db->order_by('name','ASC');
+		$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$alias = "routes".$row->id;
+				$ci->load->model('Route_model',$alias);
+				$routes_list[$row->id] = $ci->{$alias}->load($row->id);
+				$routes[$row->id] = $routes_list[$row->id]->getName();
+			}
+		}
+		$data['routes_list'] = $routes_list;
+		$data['routes'] = $this->insertEmptyIndex($routes);
+		
 		// Check to see the form was submitted
 		if($this->input->post('action') == 'submit'){
 		
@@ -45,25 +76,10 @@ class Reports extends MY_Controller {
 			$report->setStartDate($this->input->post('start_date'));
 			$report->setEndDate($this->input->post('end_date'));
 			$report->setTypeID($this->input->post('type_id'));
+			$report->setRouteID($this->input->post('route_id'));
 				
 			$results = $report->find();
 			$data['results'] = $results;
-			
-			if (!empty($results['entries'])) {
-				
-				// Get the list of active routes
-				$routes = array();
-				$this->db->order_by('name','ASC');
-				$query = $this->db->get_where('routes',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
-				if ($query->num_rows() > 0) {
-					foreach ($query->result() as $row) {
-						$alias = "routes".$row->id;
-						$ci->load->model('Route_model',$alias);
-						$routes[$row->id] = $ci->{$alias}->load($row->id);
-					}
-				}
-				$data['routes'] = $routes;
-			}
 			
 		}
 		

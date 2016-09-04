@@ -9,9 +9,10 @@ class Distances {
 	 * @param datestamp $start The start date of the running query (YYYY-MM-DD)
  	 * @param datestamp $end The end date of the running query (YYYY-MM-DD)
  	 * @param integer $type The type of entry to be located (easy, long, etc)
+ 	 * @param integer $route The route for the entry
 	 * @return number $distance Returns the distance calculated between the two dates
 	 */
-    public function returnDistanceTotal($user_id,$start=NULL,$end=NULL,$type=NULL) {
+    public function returnDistanceTotal($user_id,$start=NULL,$end=NULL,$type=NULL,$route=NULL) {
 		
 		$CI =& get_instance();
 		
@@ -26,6 +27,9 @@ class Distances {
 		}
 		if (($type != NULL) || ($type != "")) {
 			$CI->db->where('type_id = ',$type);
+		}
+		if (($route != NULL) || ($route != "")) {
+			$CI->db->where('route_id = ',$route);
 		}
 		$CI->db->select_sum('distance');
 		$query = $CI->db->get('entries');
@@ -49,9 +53,10 @@ class Distances {
 	 * @param datestamp $start The start date of the running query (YYYY-MM-DD)
  	 * @param datestamp $end The end date of the running query (YYYY-MM-DD)
  	 * @param integer $type The type of entry to be located (easy, long, etc)
+ 	 * @param integer $route The route for the entry
 	 * @return number $distance Returns the distance calculated between the two dates
 	 */
-    public function returnDistanceList($user_id,$start=NULL,$end=NULL,$type=NULL) {
+    public function returnDistanceList($user_id,$start=NULL,$end=NULL,$type=NULL,$route=NULL) {
 		
 		$CI =& get_instance();
 		
@@ -67,6 +72,9 @@ class Distances {
 		}
 		if (($type != NULL) || ($type != "")) {
 			$CI->db->where('type_id = ',$type);
+		}
+		if (($route != NULL) || ($route != "")) {
+			$CI->db->where('route_id = ',$route);
 		}
 		$query = $CI->db->get('entries');
 
