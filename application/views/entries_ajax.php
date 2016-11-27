@@ -4,7 +4,17 @@ if (!empty($entries)) {
 ?>
 						<tr>
 							<td><p><a href="<?php echo base_url("entries/edit/".$entry->getID()); ?>"><?php echo $entry->getDate(); ?></a></p></td>
+<?
+						if (isset($routes[$entry->getRouteID()])) {
+?>
 							<td><p><?php echo $routes[$entry->getRouteID()]->getName(); ?></p></td>
+<?
+						} else {
+?>
+							<td><p class="text-muted">Unknown route</p></td>
+<?
+						}
+?>
 							<td><p><?php echo $run_types[$entry->getTypeID()]; ?></p></td>
 							<td><p><?php echo $entry->getDistance(); ?> km</p></td>
 							<td><p><?php echo $entry->getTime(); ?></p></td>

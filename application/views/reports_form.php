@@ -104,7 +104,17 @@ if (!empty($results['entries'])) {
 ?>
 						<tr>
 							<td><p><a target="entry-window" href="<?php echo base_url("entries/edit/".$entry->getID()); ?>"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> <?php echo $entry->getDate(); ?></a></p></td>
+<?
+						if (isset($routes[$entry->getRouteID()])) {
+?>
 							<td><p><?php echo $routes_list[$entry->getRouteID()]->getName(); ?></p></td>
+<?
+						} else {
+?>
+							<td><p class="text-muted">Unknown route</p></td>
+<?
+						}
+?>
 							<td><p><?php echo $run_types[$entry->getTypeID()]; ?></p></td>
 							<td><p><?php echo $entry->getDistance(); ?> km</p></td>
 							<td><p><?php echo $entry->getTime(); ?></p></td>
