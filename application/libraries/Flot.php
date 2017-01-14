@@ -12,8 +12,8 @@ class Flot {
 	 */
 	public function returnFrontPageInit($data,$start,$end) {
 		
-		$start = date("Y,m,d",strtotime($this->utilCorrectDate($start)." -1 days"));
-		$end = date("Y,m,d",strtotime($this->utilCorrectDate($end)." +1 days"));
+		$start = strtotime($start." -1 days") * 1000;
+		$end = strtotime($end." +1 days") * 1000;
 		
 		$js = "";
 		
@@ -33,8 +33,8 @@ class Flot {
 			$js .= "					xaxis: {\n";
 			$js .= "						mode: \"time\",\n";
 			$js .= "						minTickSize: [1, \"day\"],\n";
-			$js .= "						min: (new Date(".$start.")).getTime(),\n";
-			$js .= "						max: (new Date(".$end.")).getTime(),\n";
+			$js .= "						min: ".$start.",\n";
+			$js .= "						max: ".$end.",\n";
 			$js .= "						timeformat: \"%Y/%m/%d\"\n";
 			$js .= "					}\n";
 			$js .= "				});\n";
@@ -57,8 +57,8 @@ class Flot {
 		
 		if (!empty($list)) {
 			foreach ($list as $id => $entry) {
-				$date = date("Y,m,d",strtotime($this->utilCorrectDate($entry->getDate())));
-				$string = "[(new Date(".$date.")).getTime(),".$entry->getDistance()."],";
+				$date = strtotime($entry->getDate()) * 1000;
+				$string = "[".$date.",".$entry->getDistance()."],";
 				switch ($entry->getTypeID()) {
 					case 1:
 						$race .= $string;
@@ -118,17 +118,6 @@ class Flot {
 		if (strlen($string) > 0) {
 			$string = substr($string,0,-1);  
 		}
-		return $string;
-	}
-	
-	/**
-	 * Correction for Flot; changes the month value in a datestamp by reducing it by one
-	 *
-	 * @param string $string The string to be formatted
-	 * @return string $string The string after formatting
-	 */
-	private function utilCorrectDate($string) {
-		$string =  date("Y",strtotime($string))."-".date("m",strtotime($string." -1 month"))."-".date("d",strtotime($string));
 		return $string;
 	}
 		
