@@ -51,8 +51,6 @@ class Dates {
     public function returnPreviousWeeks($weeks) {
 		
 		$dates = array();
-		$current_year = date("Y");
-		$current_month = date("m");
 		$current_day_week = date("w");
 		
 		switch ($current_day_week) {
@@ -79,11 +77,13 @@ class Dates {
 				break;
 		}
 		
-		$week_start_day = date("d",$stamp);		
+		$week_start_day = date("d",$stamp);
+		$week_month_start = date("m",$stamp);
+		$week_year_start = date("Y",$stamp);
 		
 		for ($counter = 0; $counter < $weeks; $counter++) {
 			$endpoints = array();
-			$stamp = strtotime($current_year.'-'.$current_month.'-'.$week_start_day.' -'.$counter.' weeks');
+			$stamp = strtotime($week_year_start.'-'.$week_month_start.'-'.$week_start_day.' -'.$counter.' weeks');
 			$endpoints['start'] = date("Y-m-d",$stamp);
 			$stamp = strtotime($endpoints['start'].' +6 days');
 			$endpoints['end'] = date("Y-m-d",$stamp);
