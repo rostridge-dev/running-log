@@ -754,6 +754,24 @@ class Entry_model extends MY_Model {
 	}
 	
 	/**
+	 * Calculate the percentage finish in a race field for the entry
+	 *
+	 * @return string
+	 */
+	public function getPercentage() {
+		$percentage = "";
+		
+		if ($this->getIsRace() == true) {
+			$placement = $this->_placement;
+			$field = $this->_field;
+			$percentage = round($placement / $field * 100)."%";
+		}
+		
+		return $percentage;
+		
+	}
+	
+	/**
 	 * Returns whether the entry is a race or not
 	 *
 	 * @return boolean

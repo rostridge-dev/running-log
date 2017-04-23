@@ -30,3 +30,14 @@ function pad(num, size) {
 $('.datepicker').datepicker({
 	format: 'yyyy-mm-dd'
 })
+
+function getPercentage() {
+	var percentage = "";
+	var total = $('#field').val();
+	var placement = $('#placement').val();
+	if ((total != "") && (placement != "")) {
+		percentage = Number(placement) / Number(total) * 100;
+		percentage = Math.round(percentage) + "%";
+	}
+	$('#percentage').val(percentage);
+}

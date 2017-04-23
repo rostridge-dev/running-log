@@ -260,7 +260,7 @@
 							</div>
 							<div class="panel-body">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group">
 											<?php 
 												if(form_error('placement')){
@@ -268,10 +268,10 @@
 												}
 											?>
 											<label class="required" for="placement">Overall Position</label>
-											<input type="text" class="form-control" id="placement" name="placement" value="<?php echo set_value('placement', ($entry->getPlacement()) ? $entry->getPlacement() : ''); ?>">
+											<input type="text" onchange="getPercentage()" class="form-control" id="placement" name="placement" value="<?php echo set_value('placement', ($entry->getPlacement()) ? $entry->getPlacement() : ''); ?>">
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group">
 											<?php 
 												if(form_error('field')){
@@ -279,7 +279,13 @@
 												}
 											?>
 											<label class="required" for="field">Size of Field</label>
-											<input type="text" class="form-control" id="field" name="field" value="<?php echo set_value('field', ($entry->getField()) ? $entry->getField() : ''); ?>">
+											<input type="text" onchange="getPercentage()" class="form-control" id="field" name="field" value="<?php echo set_value('field', ($entry->getField()) ? $entry->getField() : ''); ?>">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="required" for="percentage">Field Placement</label>
+											<input disabled type="text" class="form-control" id="percentage" name="percentage" value="<?php echo $entry->getPercentage(); ?>">
 										</div>
 									</div>
 								</div>

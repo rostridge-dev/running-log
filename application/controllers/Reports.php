@@ -110,7 +110,7 @@ class Reports extends MY_Controller {
 	
 	private function insertEmptyIndex($array) {
 		$array[NULL] = "";
-		ksort($array);
+		asort($array);
 		return $array;
 	}
 }
