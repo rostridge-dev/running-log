@@ -31,3 +31,11 @@ div#navbar-user a:hover {
 	color: #c09853;
 	content: " (required)";
 }
+
+h1.badge-icon-large {
+	font-size:8em;
+}
+
+.well.well-no-bg {
+	background-color: #ffffff;
+}

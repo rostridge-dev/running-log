@@ -11,8 +11,22 @@ class Dates {
 		
 		$dates = array();
 		$current_year = date("Y");
-		$dates['start'] = $current_year."-01-01";
-		$dates['end'] = $current_year."-12-31";
+		$dates = $this->returnSelectedYear($current_year);
+		
+		return $dates;
+		
+	}
+	
+	/**
+	 * Return the start and end dates for the selected year
+	 *
+	 * @return array $dates Returns the start and end dates for the desired period
+	 */
+    public function returnSelectedYear($year) {
+		
+		$dates = array();
+		$dates['start'] = $year."-01-01";
+		$dates['end'] = $year."-12-31";
 		
 		return $dates;
 		
@@ -29,9 +43,26 @@ class Dates {
 		$dates = array();
 		$current_year = date("Y");
 		$current_month = date("m");
+		$dates = $this->returnPreviousMonthsByYear($months,$current_year,$current_month);
+		
+		return $dates;
+		
+	}
+	
+	/**
+	 * Return a list of start dates and end dates for the last XX months
+	 *
+	 * @param integer $months The number of months that we want start and end dates for
+	 * @param integer $year The starting year for the date ranges
+	 * @param integer $month The starting month for the date ranges
+	 * @return array $dates Returns the start and end dates for the desired period
+	 */
+    public function returnPreviousMonthsByYear($months,$year,$month) {
+		
+		$dates = array();
 		for ($counter = 0; $counter < $months; $counter++) {
 			$endpoints = array();
-			$stamp = strtotime($current_year.'-'.$current_month.'-01 -'.$counter.' months');
+			$stamp = strtotime($year.'-'.$month.'-01 -'.$counter.' months');
 			$endpoints['start'] = date("Y-m-d",$stamp);
 			$days = cal_days_in_month(CAL_GREGORIAN,date("m",$stamp),date("Y",$stamp));
 			$endpoints['end'] = date("Y",$stamp).'-'.date("m",$stamp).'-'.$days;
