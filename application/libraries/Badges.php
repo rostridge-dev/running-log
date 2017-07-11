@@ -656,5 +656,4 @@ class Badges {
 		return $badge;
 	}
 
-
 }
