@@ -1,7 +1,8 @@
 			<h2><?php echo $title; ?></h2>
 			
 <?php
-	foreach ($badges as $year => $group) {
+	if (isset($badges)) {
+		foreach ($badges as $year => $group) {
 ?>	
 			
 			<div class="row">
@@ -14,7 +15,7 @@
 						<div class="panel-body">
 						
 <?php
-		if (empty($group)) {
+			if (empty($group)) {
 ?>
 							<div class="row">
 								<div class="col-md-12">
@@ -22,14 +23,14 @@
 								</div>
 							</div>
 <?php
-		} else {
+			} else {
 ?>
 						
 							<div class="row">
 								<div class="col-md-5">
 									<div class="row">
 <?php
-			foreach ($group['large'] as $index => $badge) {
+				foreach ($group['large'] as $index => $badge) {
 ?>	
 										<div class="col-md-12">								
 											<div class="well well-sm well-no-bg">
@@ -44,7 +45,7 @@
 											</div>
 										</div>
 <?php
-			}
+				}
 ?>
 									</div>
 								</div>
@@ -52,7 +53,7 @@
 								
 									<div class="row">									
 <?php
-			foreach ($group['small'] as $index => $badge) {
+				foreach ($group['small'] as $index => $badge) {
 ?>
 										<div class="col-md-6">
 								
@@ -69,7 +70,7 @@
 										</div>
 										
 <?php
-			}
+				}
 ?>
 										
 									</div>
@@ -77,12 +78,17 @@
 							
 							</div>
 <?php
-		}
+			}
 ?>
 						</div>
 					</div>
 				</div>
 			</div>
+<?php
+		}
+	} else {
+?>
+			<p class="text-center">There are no entries entered into the system. Please add at least one entry.</p>
 <?php
 	}
 ?>
