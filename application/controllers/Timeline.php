@@ -19,7 +19,7 @@ class Timeline extends MY_Controller {
 		$dates_found = false;
 		$this->db->select_max('date','max_date');
 		$this->db->select_min('date','min_date');
-		$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id'),'type_id'=>1));
+		$query = $this->db->get_where('entries',array('active'=>true,'deleted'=>NULL,'user_id'=>$this->session->userdata('user_id')));
 		if ($query->num_rows() > 0) {
 			foreach ($query->result() as $row) {
 				if (!empty($row->max_date) && !empty($row->min_date)) {
