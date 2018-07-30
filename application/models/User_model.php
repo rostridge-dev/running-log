@@ -88,7 +88,7 @@ class User_model extends MY_Model {
 				'username' => $this->_username,
 				'firstname' => $this->_firstname,
 				'lastname' => $this->_lastname,
-				'password' => $this->_password,
+				'password' => password_hash($this->_password, PASSWORD_DEFAULT),
 				'active' => $this->_active			
 			);
 		} else {	
@@ -111,15 +111,17 @@ class User_model extends MY_Model {
 	 *
 	 * @param string $username The username to authenticate
 	 * @param string $password The password for the selected user
-	 * @return boolean $authenticated
+	 * @return integer $authenticated The ID of the authenticated user, or 0 if not authenticated
 	 */
 	public function authenticate ($username,$password) {
 		
-		$authenticated = false;
+		$authenticated = 0;
 		
-		$query = $this->db->get_where($this->_table,array('username'=>$username,'password'=>$password,'active'=>true));
+		$query = $this->db->get_where($this->_table,array('username'=>$username,'active'=>true));
 		foreach ($query->result() as $row) {
-			$authenticated = $row->id;
+			if (password_verify($password,$row->password)) {
+				$authenticated = $row->id;
+			}
 		}
 		
 		return $authenticated;
