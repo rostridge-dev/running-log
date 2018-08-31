@@ -438,6 +438,8 @@ class Badges {
 			}
 		}
 		
+		$dates = array_values(array_unique($dates));
+
 		foreach ($dates as $index => $date) {
 			if ($index < count($dates)-1) {
 				if (strtotime($date." 12:00:00 +1 day" ) == strtotime($dates[$index+1]." 12:00:00 ")) {
