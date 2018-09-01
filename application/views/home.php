@@ -56,7 +56,7 @@
 							<tbody>
 								<tr>
 									<td><strong>Distance:</strong></td>
-									<td><?php echo $distance_overall_year; ?> km</td>
+									<td><?php echo $distance_overall_year; ?> km &nbsp; (<?php echo $distance_overall_year_count; ?> entries)</td>
 								</tr>
 								<tr>
 									<td><strong>Time:</strong></td>
@@ -73,7 +73,7 @@
 							<tbody>
 								<tr>
 									<td><strong>Distance:</strong></td>
-									<td><?php echo $distance_overall_total; ?> km</td>
+									<td><?php echo $distance_overall_total; ?> km &nbsp; (<?php echo $distance_overall_total_count; ?> entries)</td>
 								</tr>
 								<tr>
 									<td><strong>Time:</strong></td>

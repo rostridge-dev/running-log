@@ -20,8 +20,10 @@ class Home extends MY_Controller {
 		$data['current_year'] = date("Y");
 		$dates_current_year = $this->dates->returnCurrentYear();
 		$data['distance_overall_total'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'));
+		$data['distance_overall_total_count'] = count($this->distances->returnDistanceList($this->session->userdata('user_id')));
 		$data['time_overall_total'] = $this->times->returnTimeTotal($this->session->userdata('user_id'));
 		$data['distance_overall_year'] = $this->distances->returnDistanceTotal($this->session->userdata('user_id'),$dates_current_year['start'],$dates_current_year['end']);
+		$data['distance_overall_year_count'] = count($this->distances->returnDistanceList($this->session->userdata('user_id'),$dates_current_year['start'],$dates_current_year['end']));
 		$data['time_overall_year'] = $this->times->returnTimeTotal($this->session->userdata('user_id'),$dates_current_year['start'],$dates_current_year['end']);
 		
 		// Grab the data for the last six months
