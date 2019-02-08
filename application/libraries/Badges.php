@@ -461,7 +461,7 @@ class Badges {
 		}
 		
 		$badge = array();
-		$badge['rank'] = $consecutive;
+		$badge['rank'] = round($datespans[0]/3);
 		$badge['icon'] = "glyphicon-signal";
 		$badge['title'] = "Another Day...";
 		$badge['content'] = "The most consecutive days you ran was ".$consecutive." in a row!";
@@ -653,7 +653,7 @@ class Badges {
 		$badge['rank'] = $rank;
 		$badge['icon'] = "glyphicon-calendar";
 		$badge['title'] = "Massive Month";
-		$badge['content'] = "Your biggest month was ".$date." totalling ".$total." km!";
+		$badge['content'] = "Your biggest month was ".$date." with ".$total." km!";
 		
 		return $badge;
 	}
