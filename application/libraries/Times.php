@@ -71,7 +71,7 @@ class Times {
 				break;
 		}
 		
-		return $seconds;
+		return (int)$seconds;
 	}
 	
 	/**
@@ -80,7 +80,7 @@ class Times {
  	 * @param integer $seconds The time in seconds
 	 * @return integer $time Returns the total time in the format HH:MM:SS (with leading days if necessary)
 	 */
-	private function convertToRunningTime($seconds) {
+	public function convertToRunningTime($seconds) {
 		if ($seconds != 0) {
 			$days = floor($seconds / 86400);
 			$hours = sprintf('%02d',round(floor(($seconds - ($days * 86400)) / 3600)));

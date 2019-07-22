@@ -82,29 +82,46 @@ class Dates {
     public function returnPreviousWeeks($weeks) {
 		
 		$dates = array();
-		$current_day_week = date("w");
+		$start = date('Y-m-d');
+		
+		$dates = $this->returnPreviousWeeksbyDate($weeks,$start);
+		
+		return $dates;
+		
+	}
+	
+	/**
+	 * Return a list of start dates and end dates for the last XX weeks
+	 *
+	 * @param integer $weeks The number of weeks that we want start and end dates for
+	 * @return array $dates Returns the start and end dates for the desired period
+	 */
+    public function returnPreviousWeeksbyDate($weeks,$start) {
+		
+		$dates = array();
+		$current_day_week = date("w",strtotime($start));
 		
 		switch ($current_day_week) {
 			case 0:
-				$stamp = strtotime(date('Y-m-d'));
+				$stamp = strtotime($start);
 				break;
 			case 1:
-				$stamp = strtotime(date('Y-m-d').' -1 days');
+				$stamp = strtotime($start.' -1 days');
 				break;
 			case 2:
-				$stamp = strtotime(date('Y-m-d').' -2 days');
+				$stamp = strtotime($start.' -2 days');
 				break;
 			case 3:
-				$stamp = strtotime(date('Y-m-d').' -3 days');
+				$stamp = strtotime($start.' -3 days');
 				break;
 			case 4:
-				$stamp = strtotime(date('Y-m-d').' -4 days');
+				$stamp = strtotime($start.' -4 days');
 				break;
 			case 5:
-				$stamp = strtotime(date('Y-m-d').' -5 days');
+				$stamp = strtotime($start.' -5 days');
 				break;
 			case 6:
-				$stamp = strtotime(date('Y-m-d').' -6 days');
+				$stamp = strtotime($start.' -6 days');
 				break;
 		}
 		
